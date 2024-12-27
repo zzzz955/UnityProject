@@ -2,21 +2,22 @@ using UnityEngine;
 
 public class PlayerTeleport : MonoBehaviour
 {
-    private void OnCollisionEnter2D(Collision2D other)
+    private void OnTriggerEnter2D(Collider2D other)
+{
+    // LevelTransition_Next에 닿았을 경우
+    if (other.gameObject.name.Contains("LevelTransition_Next"))
     {
-        // LevelTransition_Next에 닿았을 경우
-        if (other.gameObject.name.Contains("LevelTransition_Next"))
-        {
-            Debug.Log($"{other.gameObject.name}에 닿았습니다.");
-            TeleportToSpawn("PlayerSpawn_Entry", 1, other.gameObject.name);
-        }
-        // LevelTransition_Previous에 닿았을 경우
-        else if (other.gameObject.name.Contains("LevelTransition_Previous"))
-        {
-            Debug.Log($"{other.gameObject.name}에 닿았습니다.");
-            TeleportToSpawn("PlayerSpawn_Exit", -1, other.gameObject.name);
-        }
+        Debug.Log($"{other.gameObject.name}에 닿았습니다.");
+        TeleportToSpawn("PlayerSpawn_Entry", 1, other.gameObject.name);
     }
+    // LevelTransition_Previous에 닿았을 경우
+    else if (other.gameObject.name.Contains("LevelTransition_Previous"))
+    {
+        Debug.Log($"{other.gameObject.name}에 닿았습니다.");
+        TeleportToSpawn("PlayerSpawn_Exit", -1, other.gameObject.name);
+    }
+}
+
 
     // 플레이어를 해당 인덱스의 스폰 포인트로 이동
     void TeleportToSpawn(string spawnType, int offset, string transitionName)
